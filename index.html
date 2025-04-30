@@ -100,6 +100,16 @@
       color: white;
     }
 
+    #languageSelector {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
     #result {
       margin-top: 15px;
       font-size: 1.2em;
@@ -140,14 +150,20 @@
 </head>
 <body>
 
-<!-- Tombol Tema dengan Emoji -->
+<!-- Pilihan Bahasa -->
+<select id="languageSelector">
+  <option value="id">🇮🇩 Indonesia</option>
+  <option value="en">🇬🇧 English</option>
+</select>
+
+<!-- Tombol Tema -->
 <button id="themeToggle">🌙</button>
 
 <!-- Container Utama -->
 <div class="container">
   <h2>🚀 Konversi Kecepatan Cerdas</h2>
   <input type="number" id="inputValue" placeholder="Masukkan nilai kecepatan (positif)">
-  <div id="errorMsg" class="error"></div>
+  <div id="errorMsg" class="error" data-msg=""></div>
 
   <!-- Pilihan Satuan -->
   <select id="fromUnit">
@@ -177,6 +193,11 @@
   <button class="button" id="clearBtn">Hapus Riwayat</button>
 </div>
 
+<!-- Footer -->
+<footer>
+  &copy; 2025 Konversi Kecepatan Cerdas. Dibuat dengan ❤️.
+</footer>
+
 <!-- JavaScript -->
 <script>
   const input = document.getElementById('inputValue');
@@ -186,6 +207,7 @@
   const historyList = document.getElementById('historyList');
   const errorMsg = document.getElementById('errorMsg');
   const toggleBtn = document.getElementById('themeToggle');
+  const langSelect = document.getElementById('languageSelector');
 
   const conversionRates = {
     kph: 1,
@@ -194,10 +216,48 @@
     ms: 0.277778
   };
 
+  const translations = {
+    id: {
+      title: "🚀 Konversi Kecepatan Cerdas",
+      placeholder: "Masukkan nilai kecepatan (positif)",
+      convertBtn: "Konversi",
+      swapBtn: "🔁 Tukar Satuan",
+      clearBtn: "Hapus Riwayat",
+      resultPrefix: "Hasil",
+      historyTitle: "Riwayat Konversi:",
+      error: "Masukkan angka positif!"
+    },
+    en: {
+      title: "🚀 Smart Speed Converter",
+      placeholder: "Enter speed value (positive)",
+      convertBtn: "Convert",
+      swapBtn: "🔁 Swap Units",
+      clearBtn: "Clear History",
+      resultPrefix: "Result",
+      historyTitle: "Conversion History:",
+      error: "Please enter a positive number!"
+    }
+  };
+
+  function updateLanguage(lang) {
+    const t = translations[lang];
+    document.querySelector("h2").textContent = t.title;
+    input.placeholder = t.placeholder;
+    document.getElementById("convertBtn").textContent = t.convertBtn;
+    document.getElementById("swapBtn").textContent = t.swapBtn;
+    document.getElementById("clearBtn").textContent = t.clearBtn;
+    document.querySelector("#history strong").textContent = t.historyTitle;
+    errorMsg.dataset.msg = t.error;
+  }
+
+  langSelect.addEventListener("change", () => {
+    updateLanguage(langSelect.value);
+  });
+
   document.getElementById('convertBtn').addEventListener('click', () => {
     const value = parseFloat(input.value);
     if (isNaN(value) || value <= 0) {
-      errorMsg.textContent = "Masukkan angka positif!";
+      errorMsg.textContent = errorMsg.dataset.msg;
       result.textContent = "";
       return;
     }
@@ -206,7 +266,10 @@
 
     let resultValue = value * conversionRates[to.value] / conversionRates[from.value];
     const formatted = resultValue.toFixed(2);
-    result.textContent = `Hasil: ${formatted} ${to.value.toUpperCase()}`;
+    const lang = langSelect.value;
+    const label = translations[lang].resultPrefix;
+
+    result.textContent = `${label}: ${formatted} ${to.value.toUpperCase()}`;
 
     const now = new Date();
     const waktu = now.toLocaleTimeString();
@@ -229,11 +292,13 @@
     to.value = temp;
   });
 
-  // Toggle Tema
   toggleBtn.addEventListener('click', () => {
     document.body.classList.toggle("dark-mode");
     toggleBtn.textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
   });
+
+  // Bahasa default
+  updateLanguage("id");
 </script>
 
 </body>
