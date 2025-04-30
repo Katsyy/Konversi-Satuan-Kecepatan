@@ -5,22 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Konversi Kecepatan Cerdas</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-  <!-- Font Awesome yang benar -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Font Awesome untuk ikon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #5c6bc0, #42a5f5);
       transition: background 0.3s, color 0.3s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
+
     .dark-mode {
       background: linear-gradient(135deg, #1c1c1c, #333);
       color: white;
     }
+
     .container {
       max-width: 400px;
-      margin: 80px auto;
+      margin: 100px auto 20px;
       padding: 30px;
       background: white;
       border-radius: 20px;
@@ -29,12 +34,15 @@
       position: relative;
       transition: background 0.3s;
     }
+
     .dark-mode .container {
       background: #444;
     }
+
     h2 {
       margin-bottom: 20px;
     }
+
     select, input[type="number"] {
       width: 100%;
       padding: 12px;
@@ -43,6 +51,7 @@
       border: 1px solid #ccc;
       outline: none;
     }
+
     .button {
       padding: 12px;
       margin-top: 10px;
@@ -55,12 +64,15 @@
       transition: background 0.3s, transform 0.1s;
       cursor: pointer;
     }
+
     .button:hover {
       background: #1565c0;
     }
+
     .button:active {
       transform: scale(0.97);
     }
+
     #themeToggle {
       position: fixed;
       top: 20px;
@@ -73,16 +85,28 @@
       font-size: 18px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       z-index: 1000;
+      transition: background 0.3s, transform 0.2s;
     }
+
+    #themeToggle:hover {
+      background: #f0f0f0;
+    }
+
+    #themeToggle:active {
+      transform: scale(0.95);
+    }
+
     .dark-mode #themeToggle {
       background: #222;
       color: white;
     }
+
     #result {
       margin-top: 15px;
       font-size: 1.2em;
       font-weight: bold;
     }
+
     #history {
       text-align: left;
       margin-top: 15px;
@@ -90,16 +114,28 @@
       overflow-y: auto;
       font-size: 0.9em;
     }
+
     .error {
       color: red;
       font-size: 0.85em;
     }
+
     #clearBtn, #swapBtn {
       margin-top: 10px;
       background-color: #e53935;
     }
+
     #swapBtn {
       background-color: #43a047;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+      color: inherit;
+      background: transparent;
+      margin-top: auto;
     }
   </style>
 </head>
@@ -108,12 +144,13 @@
 <!-- Tombol Tema -->
 <button id="themeToggle"><i id="themeIcon" class="fas fa-moon"></i></button>
 
+<!-- Container Utama -->
 <div class="container">
   <h2>🚀 Konversi Kecepatan Cerdas</h2>
   <input type="number" id="inputValue" placeholder="Masukkan nilai kecepatan (positif)">
   <div id="errorMsg" class="error"></div>
 
-  <!-- Pilihan satuan -->
+  <!-- Pilihan Satuan -->
   <select id="fromUnit">
     <option value="kph">Kilometer per jam (KPH)</option>
     <option value="mph">Mil per jam (MPH)</option>
@@ -141,6 +178,12 @@
   <button class="button" id="clearBtn">Hapus Riwayat</button>
 </div>
 
+<!-- Footer -->
+<footer>
+  &copy; 2025 Konversi Kecepatan Cerdas. Dibuat dengan ❤️.
+</footer>
+
+<!-- JavaScript -->
 <script>
   const input = document.getElementById('inputValue');
   const from = document.getElementById('fromUnit');
@@ -191,7 +234,7 @@
     to.value = temp;
   });
 
-  // Mode tema dan ikon
+  // Tombol mode gelap/terang
   const toggleBtn = document.getElementById('themeToggle');
   const icon = document.getElementById('themeIcon');
 
