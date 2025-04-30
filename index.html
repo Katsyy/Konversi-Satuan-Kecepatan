@@ -2,280 +2,201 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Konversi Kecepatan Cerdas</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
-      transition: background 0.5s;
-      position: relative;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #5c6bc0, #42a5f5);
+      transition: background 0.3s, color 0.3s;
     }
-
     .dark-mode {
-      background: linear-gradient(135deg, #1e1e2f, #3b3b58);
+      background: linear-gradient(135deg, #1c1c1c, #333);
       color: white;
     }
-
-    .theme-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #ffffff;
-      color: #333;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 50%;
-      font-size: 18px;
-      font-weight: bold;
-      width: 50px;
-      height: 50px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .theme-button:hover {
-      background: #eee;
-      transform: scale(1.1); /* Membuat tombol "pop" saat hover */
-    }
-
-    .dark-mode .theme-button {
-      background: #444;
-      color: #fff;
-    }
-
-    .card {
+    .container {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 30px;
       background: white;
-      padding: 2rem;
       border-radius: 20px;
-      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       text-align: center;
-      max-width: 450px;
-      width: 90%;
-      animation: fadeIn 1.5s ease;
-      transition: background 0.5s, color 0.5s;
-    }
-
-    .dark-mode .card {
-      background: #2d2d44;
-      color: white;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .icon {
-      font-size: 50px;
-      margin-bottom: 10px;
-      color: #667eea;
-    }
-
-    .dark-mode .icon {
-      color: #9f7aea;
-    }
-
-    input, select, button {
-      margin: 0.7rem 0;
-      padding: 0.8rem;
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-
-    button {
-      background: #667eea;
-      color: white;
-      border: none;
-      cursor: pointer;
+      position: relative;
       transition: background 0.3s;
     }
-
-    button:hover {
-      background: #5a67d8;
+    .dark-mode .container {
+      background: #444;
     }
-
     h2 {
-      margin-bottom: 0.5rem;
+      margin-bottom: 20px;
     }
-
-    #result, #loading {
-      margin-top: 1rem;
-      font-size: 1.2rem;
+    select, input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+    .button {
+      padding: 12px;
+      margin-top: 10px;
+      width: 100%;
+      background: #1e88e5;
+      color: white;
+      border: none;
+      border-radius: 10px;
       font-weight: bold;
-      color: #333;
+      transition: background 0.3s, transform 0.1s;
+      cursor: pointer;
     }
-
-    .dark-mode #result, .dark-mode #loading {
+    .button:hover {
+      background: #1565c0;
+    }
+    .button:active {
+      transform: scale(0.97);
+    }
+    #themeToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+    .dark-mode #themeToggle {
+      background: #222;
       color: white;
     }
-
+    #result {
+      margin-top: 15px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
     #history {
       text-align: left;
-      margin-top: 1rem;
-      max-height: 100px;
+      margin-top: 15px;
+      max-height: 150px;
       overflow-y: auto;
+      font-size: 0.9em;
     }
-
-    .history-item {
-      margin-bottom: 5px;
-      font-size: 0.9rem;
-      color: #555;
+    .error {
+      color: red;
+      font-size: 0.85em;
     }
-
-    .dark-mode .history-item {
-      color: #ddd;
-    }
-
-    #clearBtn {
-      background: #ff5e5e;
+    #clearBtn, #swapBtn {
       margin-top: 10px;
+      background-color: #e53935;
+    }
+    #swapBtn {
+      background-color: #43a047;
     }
   </style>
 </head>
 <body>
 
-<!-- Tombol tema -->
-<button class="theme-button" id="themeToggle" onclick="toggleTheme()">🌙</button>
+<button id="themeToggle"><i id="themeIcon" class="fas fa-moon"></i></button>
 
-<div class="card">
-  <div class="icon">🚀</div>
-  <h2>Konversi Kecepatan Cerdas</h2>
-  
-  <input type="number" id="speedInput" placeholder="Masukkan kecepatan (positif saja)">
-  
+<div class="container">
+  <h2>🚀 Konversi Kecepatan Cerdas</h2>
+  <input type="number" id="inputValue" placeholder="Masukkan nilai kecepatan (positif)">
+  <div id="errorMsg" class="error"></div>
+
   <select id="fromUnit">
     <option value="kph">Kilometer per jam (KPH)</option>
     <option value="mph">Mil per jam (MPH)</option>
-    <option value="ms">Meter per detik (m/s)</option>
-    <option value="knot">Knot (kn)</option>
   </select>
-  
+
   <select id="toUnit">
     <option value="mph">Mil per jam (MPH)</option>
     <option value="kph">Kilometer per jam (KPH)</option>
-    <option value="ms">Meter per detik (m/s)</option>
-    <option value="knot">Knot (kn)</option>
   </select>
 
-  <button onclick="convertSpeed()">Konversi</button>
+  <button class="button" id="convertBtn">Konversi</button>
+  <button class="button" id="swapBtn">🔁 Tukar Satuan</button>
 
-  <div id="loading" style="display:none;">Menghitung...</div>
   <div id="result"></div>
 
-  <div id="history"></div>
-  <button id="clearBtn" onclick="clearHistory()">Hapus Riwayat</button>
+  <div id="history">
+    <strong>Riwayat Konversi:</strong>
+    <ul id="historyList"></ul>
+  </div>
+
+  <button class="button" id="clearBtn">Hapus Riwayat</button>
 </div>
 
-<audio id="clickSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_dffb1ee6cf.mp3"></audio>
-
 <script>
-  function playClickSound() {
-    const sound = document.getElementById('clickSound');
-    sound.play();
-  }
+  const input = document.getElementById('inputValue');
+  const from = document.getElementById('fromUnit');
+  const to = document.getElementById('toUnit');
+  const result = document.getElementById('result');
+  const historyList = document.getElementById('historyList');
+  const errorMsg = document.getElementById('errorMsg');
 
-  function convertSpeed() {
-    playClickSound();
-    const input = parseFloat(document.getElementById('speedInput').value);
-    const fromUnit = document.getElementById('fromUnit').value;
-    const toUnit = document.getElementById('toUnit').value;
-
-    if (isNaN(input) || input < 0) {
-      document.getElementById('result').innerText = "Masukkan angka positif yang valid!";
+  document.getElementById('convertBtn').addEventListener('click', () => {
+    const value = parseFloat(input.value);
+    if (isNaN(value) || value <= 0) {
+      errorMsg.textContent = "Masukkan angka positif!";
+      result.textContent = "";
       return;
     }
 
-    document.getElementById('loading').style.display = "block";
-    document.getElementById('result').innerText = "";
+    errorMsg.textContent = "";
 
-    setTimeout(() => {
-      let speedInKph;
-
-      switch (fromUnit) {
-        case 'kph': speedInKph = input; break;
-        case 'mph': speedInKph = input * 1.60934; break;
-        case 'ms':  speedInKph = input * 3.6; break;
-        case 'knot': speedInKph = input * 1.852; break;
-        default: speedInKph = input;
-      }
-
-      let result;
-      switch (toUnit) {
-        case 'kph': result = speedInKph; break;
-        case 'mph': result = speedInKph * 0.621371; break;
-        case 'ms':  result = speedInKph / 3.6; break;
-        case 'knot': result = speedInKph / 1.852; break;
-        default: result = speedInKph;
-      }
-
-      const resultText = `Hasil: ${result.toFixed(2)} ${toUnit.toUpperCase()}`;
-      document.getElementById('loading').style.display = "none";
-      document.getElementById('result').innerText = resultText;
-
-      saveHistory(input, fromUnit, result.toFixed(2), toUnit);
-      
-    }, 500);
-  }
-
-  function saveHistory(input, from, result, to) {
-    const historyItem = `${input} ${from.toUpperCase()} → ${result} ${to.toUpperCase()}`;
-    let history = JSON.parse(localStorage.getItem('conversionHistory')) || [];
-    history.unshift(historyItem);
-    if (history.length > 10) history = history.slice(0, 10);
-    localStorage.setItem('conversionHistory', JSON.stringify(history));
-    renderHistory();
-  }
-
-  function renderHistory() {
-    const history = JSON.parse(localStorage.getItem('conversionHistory')) || [];
-    const historyDiv = document.getElementById('history');
-    historyDiv.innerHTML = "<h4>Riwayat Konversi:</h4>";
-    history.forEach(item => {
-      historyDiv.innerHTML += `<div class="history-item">• ${item}</div>`;
-    });
-  }
-
-  function clearHistory() {
-    playClickSound();
-    localStorage.removeItem('conversionHistory');
-    renderHistory();
-  }
-
-  function toggleTheme() {
-    const body = document.body;
-    const themeBtn = document.getElementById('themeToggle');
-    body.classList.toggle('dark-mode');
-
-    if (body.classList.contains('dark-mode')) {
-      themeBtn.textContent = "☀️"; // Kalau dark, icon jadi matahari
+    let converted;
+    if (from.value === to.value) {
+      converted = value;
+    } else if (from.value === 'kph' && to.value === 'mph') {
+      converted = value * 0.621371;
     } else {
-      themeBtn.textContent = "🌙"; // Kalau terang, icon jadi bulan
+      converted = value / 0.621371;
     }
 
-    // Animasi kecil pas klik
-    themeBtn.style.transform = "scale(0.9)";
-    setTimeout(() => {
-      themeBtn.style.transform = "scale(1)";
-    }, 150);
-  }
+    const formatted = converted.toFixed(2);
+    result.textContent = `Hasil: ${formatted} ${to.value.toUpperCase()}`;
 
-  window.onload = () => {
-    renderHistory();
-  };
+    const now = new Date();
+    const waktu = now.toLocaleTimeString();
+
+    const item = document.createElement('li');
+    item.textContent = `${value} ${from.value.toUpperCase()} → ${formatted} ${to.value.toUpperCase()} (${waktu})`;
+    historyList.prepend(item);
+
+    new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3").play();
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    historyList.innerHTML = "";
+    result.textContent = "";
+  });
+
+  document.getElementById('swapBtn').addEventListener('click', () => {
+    const temp = from.value;
+    from.value = to.value;
+    to.value = temp;
+  });
+
+  // Mode tema
+  const toggleBtn = document.getElementById('themeToggle');
+  const icon = document.getElementById('themeIcon');
+
+  toggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle("dark-mode");
+    if (document.body.classList.contains("dark-mode")) {
+      icon.classList.replace("fa-moon", "fa-sun");
+    } else {
+      icon.classList.replace("fa-sun", "fa-moon");
+    }
+  });
 </script>
 
 </body>
