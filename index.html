@@ -154,7 +154,15 @@
 <select id="languageSelector">
   <option value="id">🇮🇩 Indonesia</option>
   <option value="en">🇬🇧 English</option>
+  <option value="zh">🇨🇳 中文</option>
+  <option value="ja">🇯🇵 日本語</option>
+  <option value="es">🇪🇸 Español</option>
+  <option value="fr">🇫🇷 Français</option>
+  <option value="tl">🇵🇭 Tagalog</option>
+  <option value="ar">🇸🇦 العربية</option>
+  <option value="ru">🇷🇺 Русский</option>
 </select>
+
 
 <!-- Tombol Tema -->
 <button id="themeToggle">🌙</button>
@@ -216,28 +224,98 @@
     ms: 0.277778
   };
 
-  const translations = {
-    id: {
-      title: "🚀 Konversi Kecepatan Cerdas",
-      placeholder: "Masukkan nilai kecepatan (positif)",
-      convertBtn: "Konversi",
-      swapBtn: "🔁 Tukar Satuan",
-      clearBtn: "Hapus Riwayat",
-      resultPrefix: "Hasil",
-      historyTitle: "Riwayat Konversi:",
-      error: "Masukkan angka positif!"
-    },
-    en: {
-      title: "🚀 Smart Speed Converter",
-      placeholder: "Enter speed value (positive)",
-      convertBtn: "Convert",
-      swapBtn: "🔁 Swap Units",
-      clearBtn: "Clear History",
-      resultPrefix: "Result",
-      historyTitle: "Conversion History:",
-      error: "Please enter a positive number!"
-    }
-  };
+ const translations = {
+  id: {
+    title: "🚀 Konversi Kecepatan Cerdas",
+    placeholder: "Masukkan nilai kecepatan (positif)",
+    convertBtn: "Konversi",
+    swapBtn: "🔁 Tukar Satuan",
+    clearBtn: "Hapus Riwayat",
+    resultPrefix: "Hasil",
+    historyTitle: "Riwayat Konversi:",
+    error: "Masukkan angka positif!"
+  },
+  en: {
+    title: "🚀 Smart Speed Converter",
+    placeholder: "Enter speed value (positive)",
+    convertBtn: "Convert",
+    swapBtn: "🔁 Swap Units",
+    clearBtn: "Clear History",
+    resultPrefix: "Result",
+    historyTitle: "Conversion History:",
+    error: "Please enter a positive number!"
+  },
+  zh: {
+    title: "🚀 智能速度转换器",
+    placeholder: "输入速度值（正数）",
+    convertBtn: "转换",
+    swapBtn: "🔁 切换单位",
+    clearBtn: "清除记录",
+    resultPrefix: "结果",
+    historyTitle: "转换记录：",
+    error: "请输入正数！"
+  },
+  ja: {
+    title: "🚀 スマート速度変換",
+    placeholder: "速度を入力（正の数）",
+    convertBtn: "変換",
+    swapBtn: "🔁 単位を交換",
+    clearBtn: "履歴を消去",
+    resultPrefix: "結果",
+    historyTitle: "変換履歴：",
+    error: "正の数を入力してください！"
+  },
+  es: {
+    title: "🚀 Convertidor de Velocidad Inteligente",
+    placeholder: "Ingrese velocidad (número positivo)",
+    convertBtn: "Convertir",
+    swapBtn: "🔁 Intercambiar unidades",
+    clearBtn: "Borrar historial",
+    resultPrefix: "Resultado",
+    historyTitle: "Historial de conversión:",
+    error: "¡Ingrese un número positivo!"
+  },
+  fr: {
+    title: "🚀 Convertisseur de Vitesse Intelligent",
+    placeholder: "Entrez la vitesse (nombre positif)",
+    convertBtn: "Convertir",
+    swapBtn: "🔁 Inverser les unités",
+    clearBtn: "Effacer l'historique",
+    resultPrefix: "Résultat",
+    historyTitle: "Historique des conversions :",
+    error: "Veuillez entrer un nombre positif !"
+  },
+  tl: {
+    title: "🚀 Matalinong Speed Converter",
+    placeholder: "Ilagay ang bilis (positibong numero)",
+    convertBtn: "I-convert",
+    swapBtn: "🔁 Palitan ang unit",
+    clearBtn: "Burahin ang Kasaysayan",
+    resultPrefix: "Resulta",
+    historyTitle: "Kasaysayan ng conversion:",
+    error: "Pakilagay ang positibong numero!"
+  },
+  ar: {
+    title: "🚀 محول السرعة الذكي",
+    placeholder: "أدخل قيمة السرعة (رقم موجب)",
+    convertBtn: "تحويل",
+    swapBtn: "🔁 تبديل الوحدات",
+    clearBtn: "مسح السجل",
+    resultPrefix: "النتيجة",
+    historyTitle: "سجل التحويل:",
+    error: "الرجاء إدخال رقم موجب!"
+  },
+  ru: {
+    title: "🚀 Умный Конвертер Скорости",
+    placeholder: "Введите значение скорости (положительное)",
+    convertBtn: "Преобразовать",
+    swapBtn: "🔁 Поменять единицы",
+    clearBtn: "Очистить историю",
+    resultPrefix: "Результат",
+    historyTitle: "История конверсии:",
+    error: "Введите положительное число!"
+  }
+};
 
   function updateLanguage(lang) {
     const t = translations[lang];
