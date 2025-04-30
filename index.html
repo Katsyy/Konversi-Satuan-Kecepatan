@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Konversi Kecepatan Cerdas</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <!-- Font Awesome yang benar -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     body {
       margin: 0;
@@ -104,6 +105,7 @@
 </head>
 <body>
 
+<!-- Tombol Tema -->
 <button id="themeToggle"><i id="themeIcon" class="fas fa-moon"></i></button>
 
 <div class="container">
@@ -111,14 +113,19 @@
   <input type="number" id="inputValue" placeholder="Masukkan nilai kecepatan (positif)">
   <div id="errorMsg" class="error"></div>
 
+  <!-- Pilihan satuan -->
   <select id="fromUnit">
     <option value="kph">Kilometer per jam (KPH)</option>
     <option value="mph">Mil per jam (MPH)</option>
+    <option value="knot">Knot</option>
+    <option value="ms">Meter per detik (m/s)</option>
   </select>
 
   <select id="toUnit">
     <option value="mph">Mil per jam (MPH)</option>
     <option value="kph">Kilometer per jam (KPH)</option>
+    <option value="knot">Knot</option>
+    <option value="ms">Meter per detik (m/s)</option>
   </select>
 
   <button class="button" id="convertBtn">Konversi</button>
@@ -142,6 +149,13 @@
   const historyList = document.getElementById('historyList');
   const errorMsg = document.getElementById('errorMsg');
 
+  const conversionRates = {
+    kph: 1,
+    mph: 0.621371,
+    knot: 0.539957,
+    ms: 0.277778
+  };
+
   document.getElementById('convertBtn').addEventListener('click', () => {
     const value = parseFloat(input.value);
     if (isNaN(value) || value <= 0) {
@@ -152,16 +166,8 @@
 
     errorMsg.textContent = "";
 
-    let converted;
-    if (from.value === to.value) {
-      converted = value;
-    } else if (from.value === 'kph' && to.value === 'mph') {
-      converted = value * 0.621371;
-    } else {
-      converted = value / 0.621371;
-    }
-
-    const formatted = converted.toFixed(2);
+    let resultValue = value * conversionRates[to.value] / conversionRates[from.value];
+    const formatted = resultValue.toFixed(2);
     result.textContent = `Hasil: ${formatted} ${to.value.toUpperCase()}`;
 
     const now = new Date();
@@ -185,7 +191,7 @@
     to.value = temp;
   });
 
-  // Mode tema
+  // Mode tema dan ikon
   const toggleBtn = document.getElementById('themeToggle');
   const icon = document.getElementById('themeIcon');
 
